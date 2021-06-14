@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"tdd-go-server/handler"
 	"testing"
 )
 
@@ -29,7 +30,7 @@ func TestGETPlayers(t *testing.T) {
 		},
 		nil,
 	}
-	server := &PlayerServer{&store}
+	server := &handler.PlayerServer{Store: &store}
 
 	tests := []struct {
 		name               string
@@ -75,7 +76,7 @@ func TestStoreWins(t *testing.T) {
 		map[string]int{},
 		nil,
 	}
-	server := &PlayerServer{&store}
+	server := &handler.PlayerServer{Store: &store}
 
 	t.Run("it records wins when POST", func(t *testing.T) {
 		player := "Pepper"

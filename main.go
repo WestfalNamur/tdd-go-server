@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"tdd-go-server/handler"
 )
 
 // InMemoryPlayerStore collects data about players in memory.
@@ -18,7 +19,7 @@ func (i *InMemoryPlayerStore) RecordWin(name string) {}
 func main() {
 	// server is a reference to PlayerServer and takes a reference to
 	// InMemoryPlayerStore.
-	server := &PlayerServer{&InMemoryPlayerStore{}}
+	server := &handler.PlayerServer{Store: &InMemoryPlayerStore{}}
 
 	// ListenAndServe listens on the TCP network address addr and then calls
 	// Serve with handler to handle requests on incoming connections. Accepted
