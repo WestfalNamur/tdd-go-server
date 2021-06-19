@@ -1,4 +1,3 @@
-# Following: https://github.com/quii/learn-go-with-tests. ALL CREDITS TO THEM.
 # Following the TDD-Go tutorial
 
 # Source and credits
