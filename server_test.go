@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"tdd-go-server/handler"
 	"testing"
 )
 
@@ -30,7 +29,7 @@ func TestGETPlayers(t *testing.T) {
 		},
 		nil,
 	}
-	server := &handler.PlayerServer{Store: &store}
+	server := &PlayerServer{&store}
 
 	tests := []struct {
 		name               string
@@ -70,15 +69,14 @@ func TestGETPlayers(t *testing.T) {
 	}
 }
 
-//server_test.go
 func TestStoreWins(t *testing.T) {
 	store := StubPlayerStore{
 		map[string]int{},
 		nil,
 	}
-	server := &handler.PlayerServer{Store: &store}
+	server := &PlayerServer{&store}
 
-	t.Run("it records wins when POST", func(t *testing.T) {
+	t.Run("it records wins on POST", func(t *testing.T) {
 		player := "Pepper"
 
 		request := newPostWinRequest(player)
@@ -98,11 +96,6 @@ func TestStoreWins(t *testing.T) {
 	})
 }
 
-func newPostWinRequest(name string) *http.Request {
-	req, _ := http.NewRequest(http.MethodPost, fmt.Sprintf("/players/%s", name), nil)
-	return req
-}
-
 func assertStatus(t testing.TB, got, want int) {
 	t.Helper()
 	if got != want {
@@ -112,6 +105,11 @@ func assertStatus(t testing.TB, got, want int) {
 
 func newGetScoreRequest(name string) *http.Request {
 	req, _ := http.NewRequest(http.MethodGet, fmt.Sprintf("/players/%s", name), nil)
+	return req
+}
+
+func newPostWinRequest(name string) *http.Request {
+	req, _ := http.NewRequest(http.MethodPost, fmt.Sprintf("/players/%s", name), nil)
 	return req
 }
 
